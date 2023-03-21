@@ -1,7 +1,16 @@
+using System;
+using Microsoft.EntityFrameworkCore;
+using ProEventos.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+// Add services to Entity Framework
+builder.Services.AddDbContext<DataContext>(options =>
+                options.UseMySql(mySqlConnection,
+                ServerVersion.AutoDetect(mySqlConnection)));
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
