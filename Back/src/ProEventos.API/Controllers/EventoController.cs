@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers;
 
@@ -10,9 +11,17 @@ public class EventoController : ControllerBase
     {
     }
 
-    [HttpGet(Name = "GetEvento")]
-    public string Get()
+    [HttpGet]
+    public Evento Get()
     {
-        return "value";
+        return new Evento() {
+            EventoId = 1,
+            Tema = "Angular e .NET",
+            Local = "Aracaju",
+            Lote = "1° Lote",
+            QtdPessoas = 250,
+            DataEvento = DateTime.Now.AddDays(2).ToString(),
+            ImagemUrl = "Foto.png"
+        };
     }
 }
