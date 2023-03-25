@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class EventosComponent implements OnInit {
 
   public eventos: any = [];
+  widthImg: number = 60;
+  margin: number = 2;
+  isVisible: boolean = true;
 
   constructor(private http: HttpClient) { }
 
@@ -16,10 +19,14 @@ export class EventosComponent implements OnInit {
     this.getEventos();
   }
 
+  showImage() {
+    this.isVisible = !this.isVisible;
+  }
+
   public getEventos(): void {
     this.http.get('http://localhost:5155/api/Eventos').subscribe(
       response => this.eventos = response,
       error => console.log(error)
-    );
+   );
   }
 }

@@ -12,7 +12,10 @@
   <thead class="table-dark">
     <tr>
       <th>#</th>
-      <th>Imagem</th>
+      <th><button class="btn btn-outline-light btn-sm"
+        (click)="showImage()" >
+        {{!isVisible ? 'Exibir' : 'Ocultar'}}
+      </button></th>
       <th>Tema</th>
       <th>Local</th>
       <th>Data</th>
@@ -24,7 +27,12 @@
   <tbody *ngIf="eventos">
     <tr *ngFor="let evento of eventos">
       <td>{{evento.eventoId}}</td>
-      <td>{{evento.imagemUrl}}</td>
+      <td  >
+        <img *ngIf="isVisible"
+        src="/assets/{{evento.imagemUrl}}"
+        [style.width.px]="widthImg"
+        [style.margin.px]=""marginImg>
+      </td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
       <td>{{evento.dataEvento}}</td>
@@ -33,7 +41,7 @@
       <td></td>
     </tr>
   </tbody>
-  <tfoot *ngIf="eventos.lenght == 0">
+  <tfoot *ngIf="!eventos.length">
     <tr>
       <td colspan="8" class="text-center">
         <h4>Nenhum evento cadastrado</h4>
