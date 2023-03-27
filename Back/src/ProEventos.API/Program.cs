@@ -1,12 +1,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using ProEventos.API.Data;
+using ProEventos.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 // Add services to Entity Framework
-builder.Services.AddDbContext<DataContext>(options =>
+builder.Services.AddDbContext<ProEventosContext>(options =>
                 options.UseMySql(mySqlConnection,
                 ServerVersion.AutoDetect(mySqlConnection)));
 
