@@ -20,7 +20,6 @@ public class EventosController : ControllerBase
     {
         return _context.Eventos;
     }
-
     [HttpGet("{id}")]
     public Evento GetById(int id)
     {
