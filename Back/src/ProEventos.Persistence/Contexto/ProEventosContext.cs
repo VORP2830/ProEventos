@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 using ProEventos.Domain.Models;
 
-namespace ProEventos.Persistence;
+namespace ProEventos.Persistence.Contexto;
 
 public class ProEventosContext : DbContext
 {
