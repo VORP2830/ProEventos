@@ -18,7 +18,7 @@ builder.Services.AddDbContext<ProEventosContext>(options =>
                 ServerVersion.AutoDetect(mySqlConnection)));
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
