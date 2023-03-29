@@ -1,3 +1,4 @@
+import { EventoService } from './services/evento.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
@@ -27,7 +28,7 @@ import { NavComponent } from './nav/nav.component';
     CollapseModule.forRoot(),
     FormsModule
   ],
-  providers: [],
+  providers: [EventoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
