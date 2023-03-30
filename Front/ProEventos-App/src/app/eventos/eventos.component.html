@@ -30,7 +30,7 @@
   </thead>
   <tbody *ngIf="eventos">
     <tr *ngFor="let evento of eventosFiltrados">
-      <td>{{evento.eventoId}}</td>
+      <td>{{evento.id}}</td>
       <td  >
         <img *ngIf="isVisible"
         src="/assets/{{evento.imagemUrl}}"
@@ -39,12 +39,18 @@
       </td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.dataEvento | DateTimeFormat}}</td>
       <td>{{evento.qtdPessoas}}</td>
-      <td>{{evento.lote}}</td>
+      <td>{{evento.lotes}}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm m-2">Editar</button>
-        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <button type="button" class="btn btn-primary btn-sm m-2" tooltip="Editar">
+          <i class="fa fa-edit"></i>
+          Editar
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir">
+          <i class="fa fa-trash"></i>
+          Excluir
+        </button>
       </td>
     </tr>
   </tbody>
