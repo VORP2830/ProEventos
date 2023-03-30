@@ -64,7 +64,7 @@ export class EventosComponent implements OnInit {
         console.log(error);
         this.toastr.error('Erro ao carregar os eventos', 'Erro!');
       },
-      complete: () => this.spinner.hide();
+      complete: () => this.spinner.hide()
     })
   }
 
