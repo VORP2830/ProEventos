@@ -19,14 +19,16 @@ import { NavComponent } from './nav/nav.component';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventoService } from './services/evento.service';
+import { SharedComponent } from './shared/shared.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     EventosComponent,
       PalestrantesComponent,
       NavComponent,
-      DateTimeFormatPipe
+      DateTimeFormatPipe,
+      SharedComponent
    ],
   imports: [
     BrowserModule,
