@@ -1,4 +1,4 @@
-<app-shared></app-shared>
+<app-titulo [titulo]="'Evento'"></app-titulo>
 <hr>
 
 <div class="form-inline">
@@ -41,7 +41,7 @@
       <td>{{evento.local}}</td>
       <td>{{evento.dataEvento | DateTimeFormat}}</td>
       <td>{{evento.qtdPessoas}}</td>
-      <td>{{evento.lotes}}</td>
+      <td>{{evento.lotes[0].nome}}</td>
       <td>
         <button type="button" class="btn btn-primary btn-sm m-2" tooltip="Editar">
           <i class="fa fa-edit"></i>
