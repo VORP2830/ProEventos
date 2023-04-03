@@ -13,7 +13,7 @@ export class EventoDetalheComponent implements OnInit{
   get f(): any{
     return this.form.controls;
   }
-  
+
   constructor (private fb: FormBuilder) { };
 
   ngOnInit(): void {
@@ -30,6 +30,9 @@ export class EventoDetalheComponent implements OnInit{
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     })
+  }
+  resetForm() :void {
+    this.form.reset();
   }
 
 }
