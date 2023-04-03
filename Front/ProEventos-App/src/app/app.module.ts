@@ -23,6 +23,11 @@ import { DashboardComponent } from './componentes/dashboard/dashboard.component'
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventoService } from './services/evento.service';
 import { TituloComponent } from './shared/titulo/titulo.component';
+import { EventoDetalheComponent } from './componentes/eventos/evento-detalhe/evento-detalhe.component';
+import { EventoListaComponent } from './componentes/eventos/evento-lista/evento-lista.component';
+import { UserComponent } from './componentes/user/user.component';
+import { LoginComponent } from './componentes/user/login/login.component';
+import { RegistrationComponent } from './componentes/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,13 @@ import { TituloComponent } from './shared/titulo/titulo.component';
       DashboardComponent,
       NavComponent,
       DateTimeFormatPipe,
-      TituloComponent
+      TituloComponent,
+      EventoDetalheComponent,
+      EventoListaComponent,
+      UserComponent,
+      LoginComponent,
+      RegistrationComponent,
+
    ],
   imports: [
     BrowserModule,
@@ -53,6 +64,7 @@ import { TituloComponent } from './shared/titulo/titulo.component';
       progressBar: true,
       }),
       NgxSpinnerModule,
+
   ],
   providers: [EventoService],
   bootstrap: [AppComponent]
