@@ -29,6 +29,7 @@
           <label>Data e Hora</label>
           <input type="datetime" class="form-control"
           [ngClass]="{'is-invalid': f.dataEvento.errors && f.dataEvento.touched }"
+          bsDatepicker [bsConfig]= "bsConfig"
           formControlName="dataEvento" placeholder="">
           <div *ngIf="f.dataEvento.errors?.required" class="invalid-feedback">
             Data e hora são obrigatórios
