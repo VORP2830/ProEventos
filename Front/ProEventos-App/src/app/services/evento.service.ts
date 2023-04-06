@@ -17,8 +17,8 @@ export class EventoService {
     return this.http.get<Evento[]>(`${this.baseURL}/${tema}/tema`);
   }
 
-  public getEventoById(id: number): Observable<Evento[]> {
-    return this.http.get<Evento[]>(`${this.baseURL}/${id}`);
+  public getEventoById(id: number): Observable<Evento> {
+    return this.http.get<Evento>(`${this.baseURL}/${id}`);
   }
 
 }

@@ -3,7 +3,6 @@ import { Palestrante } from "./Palestrante";
 import { RedeSocial } from "./RedeSocial";
 
 export interface Evento {
-
   id: number;
   local: string;
   dataEvento: Date;
