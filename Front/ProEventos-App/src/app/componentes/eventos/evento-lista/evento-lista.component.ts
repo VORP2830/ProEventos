@@ -20,6 +20,7 @@ export class EventoListaComponent implements OnInit{
   margin: number = 2;
   isVisible: boolean = true;
   private filtroListado: string = '';
+  eventoId: number = 0;
 
   public get filtro() {
     return this.filtroListado;
@@ -69,7 +70,9 @@ export class EventoListaComponent implements OnInit{
     })
   }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
