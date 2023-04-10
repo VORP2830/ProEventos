@@ -1,8 +1,6 @@
-using System.Threading.Tasks;
 using ProEventos.Application.DTOs;
-using ProEventos.Domain.Models;
 
-namespace ProEventos.Application
+namespace ProEventos.Application.Contratos
 {
     public interface IEventoService
     {

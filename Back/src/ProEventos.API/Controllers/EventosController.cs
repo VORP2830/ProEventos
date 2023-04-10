@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application;
 using ProEventos.Domain.Models;
 using ProEventos.Application.DTOs;
+using ProEventos.Application.Contratos;
 
 namespace ProEventos.API.Controllers;
 

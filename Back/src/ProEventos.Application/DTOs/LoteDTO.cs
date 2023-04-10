@@ -8,6 +8,7 @@ namespace ProEventos.Application.DTOs
         public string? DateInicio { get; set; }
         public string? DateFim { get; set; }
         public int Quantidade { get; set; }
+        public int EventoId { get; set; }
         public EventoDTO Evento { get; set; }
     }
 }

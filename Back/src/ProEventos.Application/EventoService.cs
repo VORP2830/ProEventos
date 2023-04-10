@@ -1,4 +1,5 @@
 using AutoMapper;
+using ProEventos.Application.Contratos;
 using ProEventos.Application.DTOs;
 using ProEventos.Domain.Models;
 using ProEventos.Persistence.Contratos;

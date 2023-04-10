@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProEventos.Application.Contratos;
 using ProEventos.Application;
 using ProEventos.Persistence;
 using ProEventos.Persistence.Contexto;
@@ -22,9 +23,11 @@ builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.Re
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
-builder.Services.AddScoped<IEventoPersist, EventosPersist>();
+builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IEventoPersist, EventoPersist>();
+builder.Services.AddScoped<ILotePersist, LotePersist>();
+builder.Services.AddScoped<ILoteService, LoteService>();
 
 builder.Services.AddCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
