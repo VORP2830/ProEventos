@@ -13,5 +13,5 @@ export interface Evento {
   email: string;
   lotes: Lote[];
   redesSociais: RedeSocial[];
-  palestrantesEventos: Palestrante[];
+  palestrantes: Palestrante[];
 }

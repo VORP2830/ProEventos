@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class EventoDetalheComponent implements OnInit{
   evento = {} as Evento;
   form!: FormGroup;
-  eventoSalvar = 'post';
+  eventoSalvar: string = 'post';
 
   get f(): any{
     return this.form.controls;
@@ -41,9 +41,9 @@ export class EventoDetalheComponent implements OnInit{
   };
 
   public carregarEvento(): void {
-    this.spinner.show();
     const eventoIdParam = this.router.snapshot.paramMap.get('id');
     if(eventoIdParam != null) {
+      this.spinner.show();
       this.eventoSalvar = 'put';
       this.eventoService.getEventoById(+eventoIdParam).subscribe(
         (evento: Evento) => {
@@ -51,7 +51,6 @@ export class EventoDetalheComponent implements OnInit{
           this.form.patchValue(this.evento);
         },
         (error: any) => {
-          this.spinner.hide();
           this.toastr.error('Erro ao tentar carregar evento.')
           console.log(error)
         },
@@ -85,29 +84,31 @@ export class EventoDetalheComponent implements OnInit{
     if(this.form.valid) {
       if(this.eventoSalvar == 'post'){
         this.evento = {... this.form.value}
-        this.eventoService.postEvento(this.evento).subscribe({
-        next: () => {this.toastr.success('Evento salvo com sucesso', "Sucesso")},
-        error: (error: any) => {
-          console.log(error);
-          this.spinner.hide();
-          this.toastr.error('Erro ao salvar evento', 'Erro');
-          },
-        complete: () => {}
-      })
-      }
-      else{
-        this.evento = {id: this.evento.id, ... this.form.value}
-        this.eventoService.putEvento(this.evento.id, this.evento).subscribe({
+        this.evento.lotes = [];
+        this.evento.redesSociais = [];
+        this.evento.palestrantes= [];
+
+        this.eventoService.post (this.evento).subscribe({
           next: () => {this.toastr.success('Evento salvo com sucesso', "Sucesso")},
           error: (error: any) => {
             console.log(error);
-            this.spinner.hide();
             this.toastr.error('Erro ao salvar evento', 'Erro');
-            },
-          complete: () => {}
-        })
-      }
+            }
+        }).add(() => this.spinner.hide());
+      } else{
+        this.evento = {id: this.evento.id, ... this.form.value}
+        this.evento.lotes = [];
+        this.evento.redesSociais = [];
+        this.evento.palestrantes = [];
 
+        this.eventoService.put (this.evento).subscribe({
+          next: () => {this.toastr.success('Evento salvo com sucesso', "Sucesso")},
+          error: (error: any) => {
+            console.log(error);
+            this.toastr.error('Erro ao salvar evento', 'Erro');
+            }
+        }).add(() => this.spinner.hide());
+      }
 
     }
   }
