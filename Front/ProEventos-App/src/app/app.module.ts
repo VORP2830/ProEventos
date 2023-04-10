@@ -31,6 +31,7 @@ import { EventoListaComponent } from './componentes/eventos/evento-lista/evento-
 import { UserComponent } from './componentes/user/user.component';
 import { LoginComponent } from './componentes/user/login/login.component';
 import { RegistrationComponent } from './componentes/user/registration/registration.component';
+import { LoteService } from './services/lote.service';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -72,7 +73,10 @@ defineLocale('pt-br', ptBrLocale);
       BsDatepickerModule.forRoot(),
 
   ],
-  providers: [EventoService],
+  providers: [
+    EventoService,
+    LoteService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
