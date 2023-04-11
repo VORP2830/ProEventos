@@ -141,8 +141,8 @@ export class EventoDetalheComponent implements OnInit{
         this.evento.palestrantes= [];
 
         this.eventoService.post (this.evento).subscribe({
-          next: (eventoRetorno: Evento) => {
-            this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`]);
+          next: (eventoRetorno: any) => {
+            this.router.navigate([`eventos/detalhe/${eventoRetorno.result.id}`]);
             this.toastr.success('Evento salvo com sucesso', "Sucesso");
           },
           error: (error: any) => {
