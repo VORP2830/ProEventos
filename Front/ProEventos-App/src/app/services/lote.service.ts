@@ -17,7 +17,7 @@ export class LoteService {
     return this.http.put<Lote>(`${this.baseURL}/${eventoId}`, lotes).pipe(take(1));
   }
 
-  public deleteEvento(eventoId: number, loteId: number): Observable<any> {
+  public deleteLote(eventoId: number, loteId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseURL}/${eventoId}/${loteId}`).pipe(take(1));
   }
 

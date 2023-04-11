@@ -95,7 +95,7 @@
   </form>
 </div>
 
-<div class="card rounded shadow-sm mt-4">
+<div class="card rounded shadow-sm mt-4" *ngIf="modoEditar">
   <div class="p-3">
     <div class="d-flex border-bottom">
       <h2 class="me-auto">
@@ -111,11 +111,12 @@
         <div formArrayName="lotes" *ngFor="let lote of lotes.controls; let i=index">
           <fieldset [formGroupName]="i" class="form-group">
             <legend class="d-flex justify-content-between capitalize">
-              <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+              <button (click)="removerLote(template, i)" class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
                 tooltip="Excluir Lote"
                 [adaptivePosition]="false"
                 [delay]="500"
                 placement="left">
+
               <i class="fa fa-window-close my-1"></i>
               <b class="ml-1 d-none d-sm-block">Excluir</b>
             </button>
@@ -139,11 +140,13 @@
             <div class="form-group col-md-4">
               <label>Data Início</label>
               <input [ngClass]="{'is-invalid': lotes.get(i+'.dataInicio')?.errors && lotes.get(i+'.dataInicio')?.touched}"
+              bsDatepicker [bsConfig]= "bsConfigLote"
               type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019">
             </div>
             <div class="form-group col-md-4">
               <label>Data Fim</label>
               <input [ngClass]="{'is-invalid': lotes.get(i+'.dataFim')?.errors && lotes.get(i+'.dataFim')?.touched}"
+              bsDatepicker [bsConfig]= "bsConfigLote"
               type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2019">
             </div>
           </div>
@@ -161,9 +164,18 @@
     <button class="btn btn-outline-secondary me-auto border">
       Cancelar Alteração
     </button>
-    <button class="btn btn-success">
+    <button class="btn btn-success" (click)="salvarLotes()">
       Salvar Lotes
     </button>
   </div>
 </div>
 </div>
+<br>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar esse lote?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
