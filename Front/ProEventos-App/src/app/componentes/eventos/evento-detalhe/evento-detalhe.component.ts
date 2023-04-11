@@ -123,6 +123,10 @@ export class EventoDetalheComponent implements OnInit{
     })
   }
 
+  public retornaTituloLote(nome: string) {
+    return nome == null || nome == '' ? 'Nome do lote' : nome;
+  }
+
   resetForm() :void {
     this.form.reset();
   }
