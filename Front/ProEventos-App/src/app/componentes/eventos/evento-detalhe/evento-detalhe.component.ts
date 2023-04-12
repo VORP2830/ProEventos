@@ -23,6 +23,7 @@ export class EventoDetalheComponent implements OnInit{
   eventoSalvar: string = 'post';
   modalRef?: BsModalRef;
   loteAtual = {id: 0, indice: 0};
+  imagemUrl = 'assets/sem-foto.jpg'
 
   get f(): any{
     return this.form.controls;
