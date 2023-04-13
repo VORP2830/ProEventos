@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Lote } from 'src/app/models/Lote';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -24,6 +25,7 @@ export class EventoDetalheComponent implements OnInit{
   modalRef?: BsModalRef;
   loteAtual = {id: 0, indice: 0};
   imagemUrl = 'assets/sem-foto.jpg'
+  file!: File;
 
   get f(): any{
     return this.form.controls;
@@ -77,6 +79,9 @@ export class EventoDetalheComponent implements OnInit{
         (evento: Evento) => {
           this.evento = {...evento};
           this.form.patchValue(this.evento);
+          if(this.evento.imagemUrl != ''){
+            this.imagemUrl = `${environment.apiURL}/resources/images/${this.evento.imagemUrl}`
+          }
           this.evento.lotes.forEach(lote => {
             this.lotes.push(this.criarLote(lote));
           })
@@ -101,7 +106,7 @@ export class EventoDetalheComponent implements OnInit{
       dataEvento: ['', Validators.required],
       tema: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
-      imagemUrl: ['', Validators.required],
+      imagemUrl: [''],
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       lotes: this.fb.array([])
@@ -173,7 +178,7 @@ export class EventoDetalheComponent implements OnInit{
   public salvarLotes(): void {
     this.spinner.show();
     if(this.form.controls['lotes'].valid) {
-      this.loteService.saveLotes(this.eventoId, this.form.value.lotes).subscribe(
+      this.loteService.saveLotes(this.evento.id, this.form.value.lotes).subscribe(
         {
           next: () => {
             this.toastr.success('Lotes salvos com sucesso!', 'Sucesso');
@@ -213,5 +218,27 @@ export class EventoDetalheComponent implements OnInit{
 
   decline(): void {
     this.modalRef?.hide();
+  }
+
+  public onFileChange(ev : any) : void{
+    const reader = new FileReader();
+    reader.onload = (event : any) => this.imagemUrl = event.target.result;
+    this.file = ev.target.files[0];
+    reader.readAsDataURL(this.file);
+    this.uploadImage();
+  }
+
+  uploadImage(): void {
+    this.spinner.show();
+    this.eventoService.postUpload(this.evento.id, this.file).subscribe({
+      next: () => {
+        this.carregarEvento();
+        this.toastr.success('Imagem atualizado com sucesso!', 'Sucesso');
+      },
+      error: (error: any) => {
+        this.toastr.error('Erro ao fazer upload da imagem!', 'Erro')
+        console.log(error);
+      }
+    }).add(() => this.spinner.hide());
   }
 }

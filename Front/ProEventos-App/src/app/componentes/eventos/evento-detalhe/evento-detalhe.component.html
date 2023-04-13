@@ -8,7 +8,7 @@
               <label>Tema</label>
               <input type="text" class="form-control"
               [ngClass]="{'is-invalid': f.tema.errors && f.tema.touched }"
-              formControlName="tema" placeholder="Insira o Tema">
+              formControlName="tema" placeholder="Insira o Tema" [(ngModel)]="evento.tema">
               <div *ngIf="f.tema.errors?.required" class="invalid-feedback">
                 Tema é obrigatório
               </div>
@@ -22,7 +22,7 @@
               <label>Local</label>
               <input type="text" class="form-control"
               [ngClass]="{'is-invalid': f.local.errors && f.local.touched }"
-              formControlName="local" placeholder="">
+              formControlName="local" placeholder="" [(ngModel)]="evento.local">
               <div *ngIf="f.local.errors?.required" class="invalid-feedback">
                 Local é obrigatório
               </div>
@@ -32,7 +32,7 @@
               <input type="datetime" class="form-control"
               [ngClass]="{'is-invalid': f.dataEvento.errors && f.dataEvento.touched }"
               bsDatepicker [bsConfig]= "bsConfig"
-              formControlName="dataEvento" placeholder="">
+              formControlName="dataEvento" placeholder="" [(ngModel)]="evento.dataEvento">
               <div *ngIf="f.dataEvento.errors?.required" class="invalid-feedback">
                 Data e hora são obrigatórios
               </div>
@@ -43,7 +43,7 @@
               <label>Qtd Pessoas</label>
               <input type="text" class="form-control"
               [ngClass]="{'is-invalid': f.qtdPessoas.errors && f.qtdPessoas.touched }"
-              formControlName="qtdPessoas" placeholder="">
+              formControlName="qtdPessoas" placeholder="" [(ngModel)]="evento.qtdPessoas">
               <div *ngIf="f.qtdPessoas.errors?.required" class="invalid-feedback">
                 Quantidade de pessoas é obrigatório
               </div>
@@ -51,34 +51,25 @@
                 O maximo de pessoas permitidas é de 120.000
               </div>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4">
               <label>Telefone</label>
               <input type="text" class="form-control"
               [ngClass]="{'is-invalid': f.telefone.errors && f.telefone.touched }"
-              formControlName="telefone" placeholder="(00) 90000-0000">
+              formControlName="telefone" placeholder="(00) 90000-0000" [(ngModel)]="evento.telefone">
               <div *ngIf="f.telefone.errors?.required" class="invalid-feedback">
                 Telefone é obrigatório
               </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label>Email</label>
               <input type="text" class="form-control"
               [ngClass]="{'is-invalid': f.email.errors && f.email.touched }"
-              formControlName="email" placeholder="e-mail">
+              formControlName="email" placeholder="e-mail" [(ngModel)]="evento.email">
               <div *ngIf="f.email.errors?.required" class="invalid-feedback">
                 E-mail é obrigatório
               </div>
               <div *ngIf="f.email.errors?.email" class="invalid-feedback">
                 E-mail inválido
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label>Imagem</label>
-              <input type="text" class="form-control"
-              [ngClass]="{'is-invalid': f.imagemUrl.errors && f.imagemUrl.touched }"
-              formControlName="imagemUrl" placeholder="URL da imagem">
-              <div *ngIf="f.imagemUrl.errors?.required" class="invalid-feedback">
-                Imagem é obrigatória
               </div>
             </div>
           </div>
@@ -184,7 +175,7 @@
 
         <div class="form-group m-0">
 
-          <input type="file" #file class="form-control is-invalid" placeholder="" style="display: none">
+          <input type="file" #file (change)="onFileChange($event)" class="form-control is-invalid" placeholder="" style="display: none">
 
         </div>
 
@@ -194,9 +185,9 @@
 
         <div class="card-img-block">
 
-          <img class="image" [src]="imagemUrl" style= "width: 100%; height: 100%;" (click)="file.click()" alt="Card image cap"
+          <img class="image-thumbnail" [src]="imagemUrl"  (click)="file.click()" alt="Card image cap"
 
-          tooltip="Uplaod de Nova Imagem" [adaptivePosition]="false" placement="bottom" />
+          tooltip="Upload de Nova Imagem" [adaptivePosition]="false" placement="bottom" />
 
         </div>
 

@@ -132,7 +132,16 @@ public class EventosController : ControllerBase
     {
         try
         {
-            if(await _eventoService.DeleteEvento(id)) return Ok( new {message = "Deletado"});
+            var evento = await _eventoService.GetEventoByIdAsync(id);
+            if(await _eventoService.DeleteEvento(id)) 
+            {
+                DeleteImagem(evento.ImagemUrl);
+                return Ok( new {message = "Deletado"});
+            }
+            else
+            {
+                throw new Exception("Ocorreu um erro não especificado ao tentar deletar o evento!");
+            }
             return BadRequest("Erro ao deletar evento");
         }
         catch (Exception ex)

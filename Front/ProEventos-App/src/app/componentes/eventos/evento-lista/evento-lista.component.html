@@ -45,7 +45,7 @@
       <td>{{evento.id}}</td>
       <td class="d-none d-md-table-cell"  >
         <img *ngIf="isVisible"
-        src="/assets/{{evento.imagemUrl}}"
+        [src]="mostraImagem(evento.imagemUrl)"
         [style.width.px]="widthImg"
         [style.margin.px]=""marginImg>
       </td>
