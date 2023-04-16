@@ -6,7 +6,7 @@ namespace ProEventos.Application.Contratos
     public interface IAccountService
     {
          Task<bool> UserExists(string username);
-         Task<UserUpdateDTO> GetUserByUsernameAsync(string username);
+         Task<UserUpdateDTO> GetUserByUserNameAsync(string username);
          Task<SignInResult> CheckUserPasswordAsync(UserUpdateDTO userUpdateDTO, string password);
          Task<UserDTO> CreateAccountAsync(UserDTO userDTO);
          Task<UserUpdateDTO> UpdateAccount(UserUpdateDTO userUpdateDTO);

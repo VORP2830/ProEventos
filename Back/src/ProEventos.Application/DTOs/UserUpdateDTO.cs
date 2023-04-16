@@ -11,5 +11,6 @@ namespace ProEventos.Application.DTOs
         public string PhoneNumber { get; set; }
         public string Funcao { get; set; }
         public string Password { get; set; }
+        public string token { get; set; }
     }
 }
