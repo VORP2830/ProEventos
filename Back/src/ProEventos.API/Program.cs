@@ -10,25 +10,64 @@ using ProEventos.Persistence;
 using ProEventos.Persistence.Contexto;
 using ProEventos.Persistence.Contratos;
 using Microsoft.Extensions.FileProviders;
+using System.Text.Json.Serialization;
+using ProEventos.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-// Add services to Entity Framework
-builder.Services.AddDbContext<ProEventosContext>(options =>
-                options.UseMySql(mySqlConnection,
-                ServerVersion.AutoDetect(mySqlConnection)));
 
+// Add services to Entity Framework
+builder.Services.AddDbContext<ProEventosContext>(
+    context => context.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+//Configurando o serviço de autenticação
+builder.Services.AddIdentityCore<User>( options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequiredLength = 4;
+    })
+    .AddRoles<Role>()
+    .AddRoleManager<RoleManager<Role>>()
+    .AddSignInManager<SignInManager<User>>()
+    .AddRoleValidator<RoleValidator<Role>>()
+    .AddEntityFrameworkStores<ProEventosContext>()
+    .AddDefaultTokenProviders();
+
+//
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 // Add services to the container.
-builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
-builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IEventoPersist, EventoPersist>();
 builder.Services.AddScoped<ILotePersist, LotePersist>();
+builder.Services.AddScoped<IUserPersist, UserPersist>();
+
+builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<ILoteService, LoteService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
