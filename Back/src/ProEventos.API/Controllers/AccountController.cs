@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ProEventos.Application.Contratos;
+using ProEventos.Application.DTOs;
+
+namespace ProEventos.API.Controllers
+{
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AccountController : ControllerBase
+    {
+        private readonly IAccountService _accountService;
+        private readonly ITokenService _tokenService;
+
+        public AccountController(IAccountService accountService, ITokenService tokenService)
+        {
+            _accountService = accountService;
+            _tokenService = tokenService;
+        }
+
+        [HttpGet("GetUser/{userName}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUser(string userName)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserNameAsync(userName);
+                return Ok(user);
+            }
+            catch (System.Exception ex)
+            {
+               return this.StatusCode(StatusCodes.Status500InternalServerError, 
+               $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(UserDTO userDTO)
+        {
+            try
+            {
+                if(await _accountService.UserExists(userDTO.Username))
+                    return BadRequest("Usuário ja existe.");
+                var user = await _accountService.CreateAccountAsync(userDTO);
+                if(user != null)
+                    return Ok(user);
+                return BadRequest("Usuário não criado, tente novamente mais tarde!");
+            }
+            catch (System.Exception ex)
+            {
+               return this.StatusCode(StatusCodes.Status500InternalServerError, 
+               $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+            }
+        }
+    }
+}
