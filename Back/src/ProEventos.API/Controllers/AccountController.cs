@@ -58,5 +58,28 @@ namespace ProEventos.API.Controllers
                $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
             }
         }
+
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(UserLoginDTO userLogin)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserNameAsync(userLogin.UserName); 
+                if (user == null) return Unauthorized("Usuário ou senha inválidos");
+                var result = await _accountService.CheckUserPasswordAsync(user, userLogin.Password);
+                if(!result.Succeeded) return Unauthorized("Usuário ou senha inválidos");
+                return Ok(new {
+                    userName = user.UserName,
+                    PrimeiroNome = user.PrimeiroNome,
+                    token = _tokenService.CreateToken(user).Result
+                });
+            }
+            catch (System.Exception ex)
+            {
+               return this.StatusCode(StatusCodes.Status500InternalServerError, 
+               $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+            }
+        }
     }
 }
