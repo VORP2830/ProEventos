@@ -41,7 +41,7 @@ public class LotesController : ControllerBase
     {
         try
         {
-            var lotes = _loteService.SaveLotes(eventoId, models);
+            var lotes = await _loteService.SaveLotes(eventoId, models);
             if(lotes == null) return BadRequest("O lote é requerido.");
             return Ok(lotes);
         }

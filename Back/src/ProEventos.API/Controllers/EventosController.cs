@@ -77,7 +77,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = _eventoService.AddEventos(model);
+            var evento = await _eventoService.AddEventos(model);
             if(evento == null) return BadRequest("O eventos é requerido.");
             return Ok(evento);
         }
@@ -116,7 +116,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = _eventoService.UpdateEvento(id, model);
+            var evento = await _eventoService.UpdateEvento(id, model);
             if(evento == null) return BadRequest("O eventos é requerido.");
             return Ok(evento);
         }
@@ -142,7 +142,6 @@ public class EventosController : ControllerBase
             {
                 throw new Exception("Ocorreu um erro não especificado ao tentar deletar o evento!");
             }
-            return BadRequest("Erro ao deletar evento");
         }
         catch (Exception ex)
         {

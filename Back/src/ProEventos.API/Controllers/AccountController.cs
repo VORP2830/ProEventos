@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Extensions;
 using ProEventos.Application.Contratos;
 using ProEventos.Application.DTOs;
 
@@ -23,12 +25,12 @@ namespace ProEventos.API.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("GetUser/{userName}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetUser(string userName)
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUser()
         {
             try
             {
+                var userName = User.GetUserName();
                 var user = await _accountService.GetUserByUserNameAsync(userName);
                 return Ok(user);
             }
@@ -55,7 +57,7 @@ namespace ProEventos.API.Controllers
             catch (System.Exception ex)
             {
                return this.StatusCode(StatusCodes.Status500InternalServerError, 
-               $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+               $"Erro ao tentar registrar usuário. Erro: {ex.Message}");
             }
         }
 
@@ -78,7 +80,25 @@ namespace ProEventos.API.Controllers
             catch (System.Exception ex)
             {
                return this.StatusCode(StatusCodes.Status500InternalServerError, 
-               $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+               $"Erro ao tentar realizar login. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
+                if(user == null) return Unauthorized("Usúario inválido.");
+                var userRetorno = await _accountService.UpdateAccount(userUpdateDTO);
+                if(userRetorno == null) return NoContent();
+                return Ok(userRetorno);
+            }
+            catch (System.Exception ex)
+            {
+               return this.StatusCode(StatusCodes.Status500InternalServerError, 
+               $"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
             }
         }
     }
