@@ -1,17 +1,18 @@
 import { Evento } from './../models/Evento';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class EventoService {
   baseURL = `${environment.apiURL}/api/Eventos`;
+  tokenHeader = new HttpHeaders({ 'Authorization': ''});
 
   constructor(private http: HttpClient) { }
 
   public getEventos(): Observable<Evento[]> {
-    return this.http.get<Evento[]>(this.baseURL).pipe(take(1));
+    return this.http.get<Evento[]>(this.baseURL, { headers: this.tokenHeader }).pipe(take(1));
   }
 
   public getEventosByTema(tema: string): Observable<Evento[]> {
