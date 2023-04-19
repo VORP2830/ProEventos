@@ -6,21 +6,25 @@ using ProEventos.Application;
 using ProEventos.Domain.Models;
 using ProEventos.Application.DTOs;
 using ProEventos.Application.Contratos;
+using ProEventos.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProEventos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class EventosController : ControllerBase
 {
     private readonly IEventoService _eventoService;
     private readonly IWebHostEnvironment _hostEnvironment;
+    private readonly IAccountService _accountService;
 
-    public EventosController(IEventoService eventoService, IWebHostEnvironment hostEnvironment)
+    public EventosController(IEventoService eventoService, IWebHostEnvironment hostEnvironment, IAccountService accountService)
     {
         _eventoService = eventoService;
         _hostEnvironment = hostEnvironment;
-
+        _accountService = accountService;
     }
 
     [HttpGet]
@@ -28,7 +32,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var eventos = await _eventoService.GetAllEventosAsync(true);
+            var eventos = await _eventoService.GetAllEventosAsync(User.GetUserId(), true);
             if(eventos == null) return NoContent();
             return Ok(eventos);
         }
@@ -43,7 +47,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(id);
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id);
             if(evento == null) return NoContent();
             return Ok(evento);
 
@@ -60,7 +64,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetAllEventosByTemaAsync(tema);
+            var evento = await _eventoService.GetAllEventosByTemaAsync(User.GetUserId(), tema);
             if(evento == null) return NoContent();
             return Ok(evento);
 
@@ -77,7 +81,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.AddEventos(model);
+            var evento = await _eventoService.AddEventos(User.GetUserId(), model);
             if(evento == null) return BadRequest("O eventos é requerido.");
             return Ok(evento);
         }
@@ -93,7 +97,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(eventoId, true);
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), eventoId, true);
             if(evento == null) return NoContent();
             var file = Request.Form.Files[0];
             if(file.Length > 0) 
@@ -101,7 +105,7 @@ public class EventosController : ControllerBase
                 DeleteImagem(evento.ImagemUrl);
                 evento.ImagemUrl = await SaveImage(file);
             }
-            var eventoRetorno = await _eventoService.UpdateEvento(eventoId, evento);
+            var eventoRetorno = await _eventoService.UpdateEvento(User.GetUserId(), eventoId, evento);
             return Ok(evento);
         }
         catch (Exception ex)
@@ -116,7 +120,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.UpdateEvento(id, model);
+            var evento = await _eventoService.UpdateEvento(User.GetUserId(), id, model);
             if(evento == null) return BadRequest("O eventos é requerido.");
             return Ok(evento);
         }
@@ -132,8 +136,8 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(id);
-            if(await _eventoService.DeleteEvento(id)) 
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id);
+            if(await _eventoService.DeleteEvento(User.GetUserId(), id)) 
             {
                 DeleteImagem(evento.ImagemUrl);
                 return Ok( new {message = "Deletado"});
