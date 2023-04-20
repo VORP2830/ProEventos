@@ -134,15 +134,15 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label>Data Início</label>
-                  <input [ngClass]="{'is-invalid': lotes.get(i+'.dataInicio')?.errors && lotes.get(i+'.dataInicio')?.touched}"
+                  <input [ngClass]="{'is-invalid': lotes.get(i+'.dateInicio')?.errors && lotes.get(i+'.dateInicio')?.touched}"
                   bsDatepicker [bsConfig]= "bsConfigLote"
-                  type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019">
+                  type="text" class="form-control" formControlName="dateInicio" placeholder="01/01/2019">
                 </div>
                 <div class="form-group col-md-4">
                   <label>Data Fim</label>
-                  <input [ngClass]="{'is-invalid': lotes.get(i+'.dataFim')?.errors && lotes.get(i+'.dataFim')?.touched}"
+                  <input [ngClass]="{'is-invalid': lotes.get(i+'.dateFim')?.errors && lotes.get(i+'.dateFim')?.touched}"
                   bsDatepicker [bsConfig]= "bsConfigLote"
-                  type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2019">
+                  type="text" class="form-control" formControlName="dateFim" placeholder="01/01/2019">
                 </div>
               </div>
             </fieldset>

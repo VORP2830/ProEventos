@@ -89,9 +89,8 @@ export class EventoDetalheComponent implements OnInit{
         (error: any) => {
           this.toastr.error('Erro ao tentar carregar evento.')
           console.log(error)
-        },
-        () => {this.spinner.hide();}
-      )
+        }
+      ).add(() => this.spinner.hide());
     }
   }
 
@@ -123,8 +122,8 @@ export class EventoDetalheComponent implements OnInit{
       nome: [lote.nome, Validators.required],
       preco: [lote.preco, Validators.required],
       quantidade: [lote.quantidade, Validators.required],
-      dataInicio: [lote.dateInicio],
-      dataFim: [lote.dateFim],
+      dateInicio: [lote.dateInicio],
+      dateFim: [lote.dateFim],
 
     })
   }
@@ -142,13 +141,11 @@ export class EventoDetalheComponent implements OnInit{
     if(this.form.valid) {
       if(this.eventoSalvar == 'post'){
         this.evento = {... this.form.value}
-        this.evento.lotes = [];
-        this.evento.redesSociais = [];
-        this.evento.palestrantes= [];
 
         this.eventoService.post (this.evento).subscribe({
           next: (eventoRetorno: any) => {
-            this.router.navigate([`eventos/detalhe/${eventoRetorno.result.id}`]);
+            console.log(eventoRetorno)
+            this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`]);
             this.toastr.success('Evento salvo com sucesso', "Sucesso");
           },
           error: (error: any) => {
@@ -158,9 +155,6 @@ export class EventoDetalheComponent implements OnInit{
         }).add(() => this.spinner.hide());
       } else{
         this.evento = {id: this.evento.id, ... this.form.value}
-        this.evento.lotes = [];
-        this.evento.redesSociais = [];
-        this.evento.palestrantes = [];
         this.eventoService.put (this.evento).subscribe({
           next: () => {
             this.toastr.success('Evento salvo com sucesso', "Sucesso")

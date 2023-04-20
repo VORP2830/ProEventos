@@ -72,9 +72,8 @@ export class EventoListaComponent implements OnInit{
       error: (error: any) => {
         console.log(error);
         this.toastr.error('Erro ao carregar os eventos', 'Erro!');
-      },
-      complete: () => this.spinner.hide()
-    })
+      }
+    }).add(() => this.spinner.hide());
   }
 
   openModal(event: any, template: TemplateRef<any>, eventoId: number): void {

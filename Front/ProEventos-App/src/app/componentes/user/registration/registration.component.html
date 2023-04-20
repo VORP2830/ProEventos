@@ -8,7 +8,7 @@
 	</div>
 
 <div class="col-md-6">
-<form class="p-1" [formGroup]="form">
+<form class="p-1" [formGroup]="form" (ngSubmit)="register()">
 	<div class="pb-2 d-block d-md-none">
 		<h3 class="border-bottom">Cadastro de Usuário</h3>
 	</div>
@@ -57,24 +57,24 @@
 		<div class="form-group col-sm-6">
 			<label for="">Senha:</label>
 			<input class="form-control" type="password"
-      [ngClass]="{'is-invalid': f.senha.errors && f.senha.touched }"
-      formControlName="senha" placeholder="Digite uma Senha" />
-      <div *ngIf="f.senha.errors?.required" class="invalid-feedback">
+      [ngClass]="{'is-invalid': f.password.errors && f.password.touched }"
+      formControlName="password" placeholder="Digite uma Senha" />
+      <div *ngIf="f.password.errors?.required" class="invalid-feedback">
         A senha é obrigatória.
       </div>
-      <div *ngIf="f.senha.errors?.minlength" class="invalid-feedback">
+      <div *ngIf="f.password.errors?.minlength" class="invalid-feedback">
         A senha deve ter no minimo 6 caracteres.
       </div>
 		</div>
 		<div class="form-group col-sm-6">
 			<label for="">Confirmar Senha:</label>
 			<input class="form-control" type="password"
-      [ngClass]="{'is-invalid': f.confirmeSenha.errors && f.confirmeSenha.touched }"
-      formControlName="confirmeSenha" placeholder="Confirme a Senha" />
-      <div *ngIf="f.confirmeSenha.errors?.required" class="invalid-feedback">
+      [ngClass]="{'is-invalid': f.confirmePassword.errors && f.confirmePassword.touched }"
+      formControlName="confirmePassword" placeholder="Confirme a Senha" />
+      <div *ngIf="f.confirmePassword.errors?.required" class="invalid-feedback">
         A confirmação de senha é obrigatória.
       </div>
-      <div *ngIf="f.confirmeSenha.errors?.mustMatch" class="invalid-feedback">
+      <div *ngIf="f.confirmePassword.errors?.mustMatch" class="invalid-feedback">
         As senhas devem ser iguais.
       </div>
 		</div>
@@ -87,7 +87,7 @@
 	</div>
 	<div class="row">
 		<div class="form-group col-12">
-			<button class="btn btn-lg btn-success btn-block px-5">
+			<button [disabled]="!form.valid" class="btn btn-lg btn-success btn-block px-5" type="submit">
 				Registar
 			</button>
 		</div>
