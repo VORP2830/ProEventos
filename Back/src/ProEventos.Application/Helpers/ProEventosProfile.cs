@@ -3,6 +3,7 @@ using ProEventos.Application.DTOs;
 using ProEventos.Domain;
 using ProEventos.Domain.Identity;
 using ProEventos.Domain.Models;
+using ProEventos.Persistence.models;
 
 namespace ProEventos.API.Helpers
 {
