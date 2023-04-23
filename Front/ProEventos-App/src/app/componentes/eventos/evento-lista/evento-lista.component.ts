@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from 'src/app/models/Evento';
+import { Pagination, PaginationResult } from 'src/app/models/Pagination';
 import { EventoService } from 'src/app/services/evento.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,6 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./evento-lista.component.scss']
 })
 export class EventoListaComponent implements OnInit{
+
   modalRef?: BsModalRef;
 
   public eventos: Evento[] = [];
@@ -22,6 +24,7 @@ export class EventoListaComponent implements OnInit{
   isVisible: boolean = true;
   private filtroListado: string = '';
   eventoId: number = 0;
+  public pagination = {} as Pagination;
 
   public get filtro() {
     return this.filtroListado;
@@ -49,7 +52,7 @@ export class EventoListaComponent implements OnInit{
     ) { }
 
   public ngOnInit(): void {
-    this.spinner.show();
+    this.pagination = { currentPage: 1, itemsPerPages: 3, totalItems: 1} as Pagination;
     this.getEventos();
   }
 
@@ -64,13 +67,16 @@ export class EventoListaComponent implements OnInit{
   }
 
   public getEventos(): void {
-    this.eventoService.getEventos().subscribe({
-      next: (eventos: Evento[]) => {
-        this.eventos = eventos;
+    this.spinner.show();
+    this.eventoService.getEventos(this.pagination.currentPage, this.pagination.itemsPerPages).subscribe({
+      next: (paginationResult: PaginationResult<Evento[]>) => {
+        this.eventos = paginationResult.result;
         this.eventosFiltrados = this.eventos;
+        this.pagination = paginationResult.pagination;
       },
       error: (error: any) => {
         console.log(error);
+
         this.toastr.error('Erro ao carregar os eventos', 'Erro!');
       }
     }).add(() => this.spinner.hide());
@@ -105,5 +111,10 @@ export class EventoListaComponent implements OnInit{
 
   detalheEvento(id: number) :void {
     this.router.navigate([`eventos/detalhe/${id}`]);
+  }
+
+  public pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.getEventos()
   }
 }

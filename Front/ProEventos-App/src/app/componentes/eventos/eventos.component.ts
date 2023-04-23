@@ -46,38 +46,6 @@ export class EventosComponent implements OnInit {
     ) { }
 
   public ngOnInit(): void {
-    this.spinner.show();
-    this.getEventos();
-  }
 
-  public showImage() {
-    this.isVisible = !this.isVisible;
-  }
-
-  public getEventos(): void {
-    this.eventoService.getEventos().subscribe({
-      next: (eventos: Evento[]) => {
-        this.eventos = eventos;
-        this.eventosFiltrados = this.eventos;
-      },
-      error: (error: any) => {
-        console.log(error);
-        this.toastr.error('Erro ao carregar os eventos', 'Erro!');
-      },
-      complete: () => this.spinner.hide()
-    })
-  }
-
-  openModal(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-  }
-
-  confirm(): void {
-    this.modalRef?.hide();
-    this.toastr.success("Excluido com sucesso!", "Deletado");
-  }
-
-  decline(): void {
-    this.modalRef?.hide();
   }
 }
