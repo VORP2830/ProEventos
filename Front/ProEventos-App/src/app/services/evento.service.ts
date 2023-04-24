@@ -11,13 +11,15 @@ export class EventoService {
 
   constructor(private http: HttpClient) { }
 
-  public getEventos(page?: number, itemsPerPage?: number): Observable<PaginationResult<Evento[]>> {
+  public getEventos(page?: number, itemsPerPage?: number, term?: string): Observable<PaginationResult<Evento[]>> {
     const paginationResult: PaginationResult<Evento[]> = new PaginationResult<Evento[]>();
     let params = new HttpParams;
     if(page != null && itemsPerPage != null){
       params = params.append('pageNumber', page.toString());
       params = params.append('pageSize', itemsPerPage.toString())
     }
+    if(term != null && term != '')
+      params = params.append('term', term)
 
     return this.http.get<Evento[]>(this.baseURL, { observe: 'response', params }).pipe(take(1), map((response: any) => {
       paginationResult.result = response.body;
