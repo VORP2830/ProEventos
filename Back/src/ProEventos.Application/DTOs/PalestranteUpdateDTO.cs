@@ -1,6 +1,6 @@
 namespace ProEventos.Application.DTOs
 {
-    public class PalestranteDTO
+    public class PalestranteUpdateDTO
     {
         public int Id { get; set; }
         public string MiniCurriculo { get; set; }

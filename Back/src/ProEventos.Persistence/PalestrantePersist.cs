@@ -25,7 +25,7 @@ namespace ProEventos.Persistence
             query = query.AsNoTracking().Where(p => (p.MiniCurriculo.ToLower().Contains(pageParams.Term.ToLower()) || p.User.PrimeiroNome.ToLower().Contains(pageParams.Term.ToLower()) || p.User.UltimoNome.ToLower().Contains(pageParams.Term.ToLower())) && p.User.Funcao == Domain.Enum.Funcao.Palestrante).OrderBy(e => e.Id);
             return await PageList<Palestrante>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
         }
-        public async Task<Palestrante> GetPalestranteByIdAsync(int userId, bool includeEventos)
+        public async Task<Palestrante> GetPalestranteByUserIdAsync(int userId, bool includeEventos)
         {
             IQueryable<Palestrante> query = _context.Palestrantes.Include(p => p.User).Include(p => p.RedesSociais);
             if(includeEventos)
