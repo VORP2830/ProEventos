@@ -22,9 +22,9 @@ namespace ProEventos.Application
         {
             try
             {
-                var Palestrante = _mapper.Map<PalestranteDTO>(model);
+                var Palestrante = _mapper.Map<Palestrante>(model);
                 Palestrante.UserId = userId;
-                _palestrantePersist.Add<PalestranteDTO>(Palestrante);
+                _palestrantePersist.Add<Palestrante>(Palestrante);
                 if(await _palestrantePersist.SaveChangesAsync())
                 {
                     var PalestranteRetorno = await _palestrantePersist.GetPalestranteByUserIdAsync(userId, false);

@@ -13,5 +13,6 @@ namespace ProEventos.Application.DTOs
         public string Descricao { get; set; }
         public string Password { get; set; }
         public string token { get; set; }
+        public string ImagemUrl { get; set; }
     }
 }
