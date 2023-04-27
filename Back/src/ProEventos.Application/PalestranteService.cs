@@ -62,7 +62,7 @@ namespace ProEventos.Application
             }
         }
 
-        public async Task<PageList<PalestranteDTO>> GetAllPalestranteAsync(int userId, PageParams pageParams, bool includeEventos = false)
+        public async Task<PageList<PalestranteDTO>> GetAllPalestranteAsync(PageParams pageParams, bool includeEventos = false)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace ProEventos.Application
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<PalestranteDTO> GetPalestranteByIdAsync(int userId, bool includeEventos = false)
+        public async Task<PalestranteDTO> GetPalestranteByUserIdAsync(int userId, bool includeEventos = false)
         {
             try
             {
