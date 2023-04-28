@@ -1,12 +1,12 @@
 export class UserUpdate {
-  titulo?: string;
-  username?: string;
-  primeironome?: string;
-  ultimonome?: string;
-  email?: string;
-  phonenumber?: string;
-  funcao?: string;
-  descricao?: string;
-  password?: string;
-  token?: string;
+  titulo!: string;
+  userName!: string;
+  primeiroNome!: string;
+  ultimoNome!: string;
+  email!: string;
+  phoneNumber!: string;
+  funcao!: string;
+  descricao!: string;
+  password!: string;
+  token!: string;
 }

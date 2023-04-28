@@ -15,6 +15,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { NgxCurrencyModule } from "ngx-currency";
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,7 @@ import { LoteService } from './services/lote.service';
 import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './componentes/Home/Home.component';
+import { PerfilDetalheComponent } from './componentes/user/perfil/perfil-detalhe/perfil-detalhe.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -55,7 +57,8 @@ defineLocale('pt-br', ptBrLocale);
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      HomeComponent
+      HomeComponent,
+      PerfilDetalheComponent,
 
    ],
   imports: [
@@ -79,6 +82,7 @@ defineLocale('pt-br', ptBrLocale);
       BsDatepickerModule.forRoot(),
       NgxCurrencyModule,
       PaginationModule.forRoot(),
+      TabsModule.forRoot()
 
   ],
   providers: [
