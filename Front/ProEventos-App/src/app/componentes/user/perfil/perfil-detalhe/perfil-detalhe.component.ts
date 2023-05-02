@@ -16,6 +16,7 @@ export class PerfilDetalheComponent implements OnInit {
   @Output() changeFormValue = new EventEmitter();
   form!: FormGroup;
   userUpdate = { } as UserUpdate;
+  public imagemUrl = '';
 
   get f(): any{
     return this.form.controls;
@@ -41,7 +42,6 @@ export class PerfilDetalheComponent implements OnInit {
     this.spinner.show();
     this.accountService.getUser().subscribe(
       (userRetorno: UserUpdate) => {
-        console.log(userRetorno)
         this.userUpdate = userRetorno;
         this.form.patchValue(this.userUpdate);
       },
@@ -58,6 +58,7 @@ export class PerfilDetalheComponent implements OnInit {
       validators: ValidatorField.MustMatch('senha', 'confirmeSenha')
     }
     this.form = this.fb.group({
+      imagemUrl: [''],
       userName: [''],
       primeiroNome: ['', Validators.required],
       titulo: ['NaoInformado', Validators.required],

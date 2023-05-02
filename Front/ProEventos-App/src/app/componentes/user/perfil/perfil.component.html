@@ -3,12 +3,16 @@
 	<div class="row p-3">
 		<div class="col-lg-3 pt-1">
 			<div class="card mb-3">
-				<div class="card-header"></div>
+				<div class="card-header">
+          <input type="file" #file (change)="onFileChange($event)" style="display: none;">
+        </div>
 				<div class="d-flex align-self-center pt-3">
 					<a>
 						<img
-						src="https://avatars.githubusercontent.com/u/91508749?v=4"
-						name="aboutme" width="120" height="120" class="rounded-circle">
+						[src]="imagemUrl"
+            (click)="file.click()"
+						name="aboutme" width="120" height="120" class="rounded-circle"
+            style="cursor: pointer;">
 					</a>
 				</div>
 				<div class="card-body">
