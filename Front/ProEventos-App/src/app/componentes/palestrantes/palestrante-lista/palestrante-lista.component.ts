@@ -66,6 +66,7 @@ export class PalestranteListaComponent implements OnInit {
       next: (paginationResult: PaginationResult<Palestrante[]>) => {
         this.Palestrantes = paginationResult.result;
         this.pagination = paginationResult.pagination;
+        console.log(paginationResult.result)
       },
       error: (error: any) => {
         console.log(error);

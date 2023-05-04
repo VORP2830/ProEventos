@@ -53,7 +53,7 @@
       <td class="d-none d-md-table-cell">{{evento.local}}</td>
       <td>{{ evento.dataEvento }}</td>
       <td class="d-none d-md-table-cell">{{evento.qtdPessoas}}</td>
-      <td class="d-none d-md-table-cell">{{evento.lotes[0]?.nome}}</td>
+      <td class="d-none d-md-table-cell">{{evento.lotes[0]!.nome}}</td>
       <td>
 
         <button type="button" class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal($event, template, evento.id)">

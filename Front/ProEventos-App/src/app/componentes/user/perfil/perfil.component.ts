@@ -34,8 +34,6 @@ export class PerfilComponent implements OnInit {
     }else {
       this.imagemUrl = '../../../../../assets/sem-foto-perfil.jpg'
     }
-
-    console.log(user)
   }
 
   public onFileChange(ev : any) : void{
