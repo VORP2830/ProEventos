@@ -39,6 +39,8 @@ import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './componentes/Home/Home.component';
 import { PerfilDetalheComponent } from './componentes/user/perfil/perfil-detalhe/perfil-detalhe.component';
+import { PalestranteListaComponent } from './componentes/palestrantes/palestrante-lista/palestrante-lista.component';
+import { PalestranteDetalheComponent } from './componentes/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -59,6 +61,9 @@ defineLocale('pt-br', ptBrLocale);
       RegistrationComponent,
       HomeComponent,
       PerfilDetalheComponent,
+      PalestranteListaComponent,
+      PalestranteDetalheComponent
+
 
    ],
   imports: [

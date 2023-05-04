@@ -23,7 +23,7 @@ export class PalestranteService {
     if(term != null && term != '')
       params = params.append('term', term)
 
-    return this.http.get<Palestrante[]>(this.baseURL, { observe: 'response', params }).pipe(take(1), map((response: any) => {
+    return this.http.get<Palestrante[]>(this.baseURL + '/all', { observe: 'response', params }).pipe(take(1), map((response: any) => {
       paginationResult.result = response.body;
       if(response.headers.has('Pagination')) {
         paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
