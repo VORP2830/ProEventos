@@ -47,6 +47,7 @@ public class EventosController : ControllerBase
         }
     }
     [HttpGet("GetAllEventos")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll([FromQuery] PageParams pageParams)
     {
         try
