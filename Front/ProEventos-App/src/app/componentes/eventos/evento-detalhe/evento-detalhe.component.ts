@@ -235,4 +235,9 @@ export class EventoDetalheComponent implements OnInit{
       }
     }).add(() => this.spinner.hide());
   }
+
+  public idEvento() {
+    let id: any = this.activatedRouter.snapshot.paramMap.get('id');
+    return +id;
+  }
 }

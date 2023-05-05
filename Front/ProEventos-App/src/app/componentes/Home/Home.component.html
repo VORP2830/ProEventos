@@ -1,1 +1,68 @@
 <app-titulo [titulo] = "'Home'" [iconClass]="'fas fa-home'"></app-titulo>
+
+
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input type="text"
+        class="form-control"
+        placeholder="Buscar tema e local"
+        (input)="filtroEventos($event.target)"
+        >
+      </div>
+    </div>
+  </div>
+  <div *ngIf="eventos && eventos.length" class="row mt-2">
+    <div class="col-md-4 mb-4 d-flex align-items-stretch" *ngFor="let evento of eventos">
+
+      <div class="card">
+        <div class="d-flex align-self-center pt-3">
+            <img
+            [src]="getImagemUrl(evento.imagemUrl)"
+            class="rounded-circle"
+            width="120" height="120">
+        </div>
+        <div class="card-body">
+          <div class="h4 text-center mb-3">{{evento.tema}}</div>
+          <div class="h7 text-bold pb-1"><b>Local:</b> {{evento.local}}</div>
+          <div class="h7">Email: {{evento.email}}</div>
+          <div class="h7">Email: {{evento.email}}</div>
+      </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-6 text-center border-right">
+                <div class="h5">0</div>
+                <div class="h6 text-muted">Pessoas participantes</div>
+              </div>
+              <div class="col-6 text-center">
+                <div class="h5">0</div>
+                <div class="h6 text-muted">Vagas disponíveis</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <pagination [boundaryLinks]="true"
+
+                [totalItems]="pagination.totalItems"
+                [(ngModel)]="pagination.currentPage"
+                [itemsPerPage]="pagination.itemsPerPages"
+                (pageChanged)="pageChanged($event)"
+
+                pageBtnClass="btn"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;">
+
+    </pagination>
+    </div>
+</div>

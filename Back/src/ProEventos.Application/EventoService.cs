@@ -79,11 +79,11 @@ namespace ProEventos.Application
             }
         }
 
-        public async Task<PageList<EventoDTO>> GetAllEventosAsync(int userId, PageParams pageParams , bool includePalestrantes = false)
+        public async Task<PageList<EventoDTO>> GetAllEventosByPalestranteIdAsync(int userId, PageParams pageParams , bool includePalestrantes = false)
         {
             try
             {
-                var eventos = await _eventoPersist.GetAllEventosAsync(userId, pageParams ,includePalestrantes);
+                var eventos = await _eventoPersist.GetAllEventosByPalestranteIdAsync(userId, pageParams ,includePalestrantes);
                 if(eventos == null) return null;
                 var EventoDto = _mapper.Map<PageList<EventoDTO>>(eventos);
 
@@ -106,6 +106,26 @@ namespace ProEventos.Application
                 var evento = await _eventoPersist.GetEventoByIdAsync(userId, eventoId, includePalestrantes);
                 if(evento == null) return null;
                 var EventoDto = _mapper.Map<EventoDTO>(evento);
+                return EventoDto;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<PageList<EventoDTO>> GetAllEventosAsync(PageParams pageParams , bool includePalestrantes = false)
+        {
+            try
+            {
+                var eventos = await _eventoPersist.GetAllEventosAsync(pageParams ,includePalestrantes);
+                if(eventos == null) return null;
+                var EventoDto = _mapper.Map<PageList<EventoDTO>>(eventos);
+
+                EventoDto.CurrentPage = eventos.CurrentPage;
+                EventoDto.TotalPages = eventos.TotalPages;
+                EventoDto.PageSize = eventos.PageSize;
+                EventoDto.TotalCount = eventos.TotalCount;
+
                 return EventoDto;
             }
             catch (Exception ex)

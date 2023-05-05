@@ -13,11 +13,10 @@ import { RedeSocialService } from 'src/app/services/redeSocial.service';
 })
 
 export class RedesSociaisComponent implements OnInit {
+  @Input() eventoId: number = 0;
   modalRef!: BsModalRef;
-  @Input() eventoId = 0;
   public formRS!: FormGroup;
   public redeSocialAtual = { id: 0, nome: '', indice: 0 };
-
   public get redesSociais(): FormArray {
     return this.formRS.get('redesSociais') as FormArray;
   }
@@ -31,6 +30,7 @@ export class RedesSociaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(`Id do evento = ${this.eventoId}`)
     this.carregarRedesSociais(this.eventoId)
     this.validation();
   }
@@ -109,7 +109,7 @@ export class RedesSociaisComponent implements OnInit {
     if (this.eventoId !== 0) origem = 'evento';
 
     this.redeSocialService.deleteRedeSocial(origem, this.eventoId, this.redeSocialAtual.id).subscribe(
-        () => { 
+        () => {
           this.toastr.success('Rede Social deletado com sucesso', 'Sucesso');
           this.redesSociais.removeAt(this.redeSocialAtual.indice);
         },

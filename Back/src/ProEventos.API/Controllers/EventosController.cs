@@ -21,7 +21,7 @@ public class EventosController : ControllerBase
     private readonly IEventoService _eventoService;
     private readonly IUtil _util;
     private readonly IAccountService _accountService;
-    private readonly string _destino = "Image";
+    private readonly string _destino = "Images";
 
     public EventosController(IEventoService eventoService, IUtil util, IAccountService accountService)
     {
@@ -35,7 +35,23 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var eventos = await _eventoService.GetAllEventosAsync(User.GetUserId(), pageParams ,true);
+            var eventos = await _eventoService.GetAllEventosByPalestranteIdAsync(User.GetUserId(), pageParams ,true);
+            if(eventos == null) return NoContent();
+            Response.AddPagination(eventos.CurrentPage, eventos.PageSize, eventos.TotalCount, eventos.TotalPages);
+            return Ok(eventos);
+        }
+        catch (Exception ex)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError,
+            $"Erro ao tentar recuperar eventos. Erro: {ex.Message}");
+        }
+    }
+    [HttpGet("GetAllEventos")]
+    public async Task<IActionResult> GetAll([FromQuery] PageParams pageParams)
+    {
+        try
+        {
+            var eventos = await _eventoService.GetAllEventosAsync(pageParams ,true);
             if(eventos == null) return NoContent();
             Response.AddPagination(eventos.CurrentPage, eventos.PageSize, eventos.TotalCount, eventos.TotalPages);
             return Ok(eventos);

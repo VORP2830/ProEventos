@@ -56,4 +56,23 @@ export class EventoService {
     formData.append('file', fileToUpload);
     return this.http.post<Evento>(`${this.baseURL}/upload-image/${eventoId}`, formData).pipe(take(1))
   }
+
+  public getAllEventos(page?: number, itemsPerPage?: number, term?: string): Observable<PaginationResult<Evento[]>> {
+    const paginationResult: PaginationResult<Evento[]> = new PaginationResult<Evento[]>();
+    let params = new HttpParams;
+    if(page != null && itemsPerPage != null){
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString())
+    }
+    if(term != null && term != '')
+      params = params.append('term', term)
+
+    return this.http.get<Evento[]>(`${this.baseURL}/getalleventos`, { observe: 'response', params }).pipe(take(1), map((response: any) => {
+      paginationResult.result = response.body;
+      if(response.headers.has('Pagination')) {
+        paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+      }
+      return paginationResult
+    }));
+  }
 }
