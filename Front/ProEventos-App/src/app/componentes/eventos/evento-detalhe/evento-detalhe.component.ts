@@ -144,7 +144,6 @@ export class EventoDetalheComponent implements OnInit{
 
         this.eventoService.post (this.evento).subscribe({
           next: (eventoRetorno: any) => {
-            console.log(eventoRetorno)
             this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`]);
             this.toastr.success('Evento salvo com sucesso', "Sucesso");
           },

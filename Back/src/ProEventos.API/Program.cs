@@ -120,12 +120,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseCors(x => x.AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowAnyOrigin());
+                    
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles(new StaticFileOptions() {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),

@@ -8,11 +8,12 @@ import {
 import { Observable, catchError, take, throwError } from 'rxjs';
 import { User } from '../models/identity/User';
 import { AccountService } from '../services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private toastr: ToastrService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let currentUser!: User;
@@ -30,7 +31,10 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(error => {
         if (error) {
-          //localStorage.removeItem('user');
+          if(error.status === 401){
+            this.toastr.error("Usuário não autenticado!");
+            localStorage.removeItem('user');
+          }
         }
         return throwError(error)
       })
